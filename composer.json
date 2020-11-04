@@ -1,0 +1,16 @@
+{
+    "name": "wanderson/app_estoque",
+    "description": "projeto estoque",
+    "authors": [
+        {
+            "name": "wandersontx",
+            "email": "wandersonh89@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\":"App/"
+        }
+    }
+}
