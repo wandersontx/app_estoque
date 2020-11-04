@@ -34,7 +34,7 @@ if(isset($_COOKIE['carrinho'])){
     
 }
 $total = 0;
-//setcookie('carrinho');
+
 ?>
 
 <div class="container" style="margin-top: 20px;">

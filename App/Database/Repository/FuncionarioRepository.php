@@ -15,27 +15,16 @@ class FuncionarioRepository
     
     public function save($dados)
     {
-        if(isset($dados) && is_array($dados)) {           
-            if(isset($dados['matricula'])) {
-                $sql = "update funcionario set nome = :nome, senha = :senha where matricula = :matricula";
-            } else {
-                $matricula = $this->gerarNumMatricula();
-                $sql = "insert into funcionario (matricula, nome, senha) values (:matricula ,:nome, :senha)";
-            }
+      
+        $matricula = $this->gerarNumMatricula();
+        $sql = "insert into funcionario (matricula, nome, senha) values (:matricula ,:nome, :senha)";
 
-            $stmt = $this->conn->prepare($sql);
-           
-            if(isset($dados['matricula'])) {
-                $matricula = $dados['matricula'];
-            }
-            $stmt->bindValue(':matricula', $matricula);
-            $stmt->bindValue(':nome', $dados['nome']);            
-            $stmt->bindValue(':senha', $dados['senha']);            
-
-            $stmt->execute();
-
-            return $matricula;
-        }
+        $stmt = $this->conn->prepare($sql);       
+        $stmt->bindValue(':matricula', $matricula);
+        $stmt->bindValue(':nome', $dados['nome']);            
+        $stmt->bindValue(':senha', $dados['senha']);          
+        $stmt->execute();
+        return $matricula;        
     }
 
     public function find($matricula)

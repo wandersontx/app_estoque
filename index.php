@@ -1,6 +1,5 @@
 <?php
 
-use App\Database\Repository\PedidoRepository;
 use App\Model\Categoria;
 use App\Model\Cliente;
 use App\Model\Funcionario;
@@ -9,9 +8,8 @@ use App\Model\Produto;
 
 require './vendor/autoload.php';
 
-
+//area restrita a clientes
 if(isset($_GET['restrito']) || isset($_POST['restrito'])) {
-
 
     if(isset($_GET['logout'])) {
         setcookie("auth");
@@ -19,10 +17,8 @@ if(isset($_GET['restrito']) || isset($_POST['restrito'])) {
         header("location: index.php");
     }
      
-    
+    //autenticação
     if(!isset($_COOKIE['auth']) || !$_COOKIE['auth']) { 
-
-
         $funcionario = new Funcionario;
         if(isset($_POST['matricula'])) {
             $dados = [
@@ -36,8 +32,7 @@ if(isset($_GET['restrito']) || isset($_POST['restrito'])) {
                 setcookie("nome" , $nome[0]);
                 header("location: index.php?restrito=1");
             }
-        }
-    
+        }    
         require 'App/Resource/Page/Restrito/loginrestrito.php';
 
 
@@ -104,17 +99,11 @@ if(isset($_GET['restrito']) || isset($_POST['restrito'])) {
                         $dados = [
                             'nome'  => $url['nome'],
                             'senha' => md5($url['senha']),
-                        ];
-                        if ($url['cadastrado'] == '1') {
-                            $dados['matricula'] = $url['matricula'];
-                        }
+                        ];                        
                             
                         $matricula = $funcionario->salvar($dados);
                         $alert = file_get_contents('App/Resource/alertsuccess.inc');
-                        if($matricula && $url['cadastrado'] != '1')                  
-                            $alert = str_replace("msg","dados salvos com sucesso. Matricula gerada <strong>$matricula</strong>.", $alert);
-                        else 
-                            $alert = str_replace("msg","dados salvos com sucesso.", $alert);
+                        $alert = str_replace("msg","dados salvos com sucesso. Matricula gerada <strong>$matricula</strong>.", $alert);                        
                         print $alert;
         
                     }
@@ -124,7 +113,7 @@ if(isset($_GET['restrito']) || isset($_POST['restrito'])) {
        
     }
     
-    
+ //Referente a area acessada por clientes  
 } else {
 
     require 'App/Resource/Template/TemplateVenda.php';

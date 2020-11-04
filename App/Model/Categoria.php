@@ -57,7 +57,6 @@ class Categoria
             return true;
         } else {
             return false;
-        }
-        
+        }        
     }
 }
