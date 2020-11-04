@@ -3,7 +3,6 @@
 namespace App\Database\Repository;
 
 use App\Database\Connection;
-use App\Model\Pedido;
 
 class PedidoRepository 
 {

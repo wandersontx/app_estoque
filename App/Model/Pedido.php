@@ -24,14 +24,8 @@ class Pedido
         $this->pedRepository  = new PedidoRepository;
         $this->prodRepository = new ProdutoRepository;
         $this->itemRepository = new ItemRepository;
-
-        $this->codpedido = $this->gerarCodPedido();
-        $this->data_pedido = date('Y-m-d H:i:s');
-        $this->itens[] = $itens;
-        $this->total = $this->calcularTotalPedido($this->itens);
-        $this->id_cliente = $id_cliente;
-
-        
+        $this->itens[] = $itens;       
+        $this->id_cliente = $id_cliente;        
     }
 
 
@@ -47,6 +41,10 @@ class Pedido
 
     public function cadastrarPedido()
     {
+
+        $this->codpedido = $this->gerarCodPedido();
+        $this->data_pedido = date('Y-m-d H:i:s');
+        $this->total = $this->calcularTotalPedido($this->itens);
         $dadosPedido = [
             'codpedido'   => $this->codpedido,
             'total'       => $this->total,
@@ -83,6 +81,11 @@ class Pedido
                 $this->ajustarEstoque($dadosItem);              
             }            
         }
+    }
+
+    public function getAll()
+    {
+        return $this->pedRepository->getAll($this->id_cliente);
     }
 
     public function ajustarEstoque($item, $operacao = 'venda')

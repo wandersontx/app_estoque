@@ -1,10 +1,10 @@
 <?php
 
-
-
+use App\Database\Repository\PedidoRepository;
 use App\Model\Categoria;
 use App\Model\Cliente;
 use App\Model\Funcionario;
+use App\Model\Pedido;
 use App\Model\Produto;
 
 require './vendor/autoload.php';
@@ -193,6 +193,10 @@ if(isset($_GET['restrito']) || isset($_POST['restrito'])) {
         }               
     }elseif(isset($_GET['cliente']) && $_GET['cliente'] == 'meuspedidos') {
         require 'App/Resource/Page/Venda/MeusPedidos.php';          
+    }elseif(isset($_GET['cliente']) && $_GET['cliente'] == 'cancelarpedido') {
+       $pedido = new Pedido(null, $_COOKIE['idcliente']);
+       $pedido->cancelarPedido($_GET['codpedido']);
+       require 'App/Resource/Page/Venda/MeusPedidos.php'; 
     }else {
         require 'App/Resource/Page/Venda/ListagemProdutos.php';
 
@@ -200,14 +204,6 @@ if(isset($_GET['restrito']) || isset($_POST['restrito'])) {
 }
 
 
-/*
-
-
-
-
-
- 
-*/
 
 
 
